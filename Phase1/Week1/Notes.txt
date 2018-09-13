@@ -1,0 +1,8 @@
+Week 1:
+Day 1:
+Errors:
+There are the different issues with Errors: Type, Value, Traceback
+Class is a programmer defined type
+
+Jsonify - like dumps but returns a proper json file
+
