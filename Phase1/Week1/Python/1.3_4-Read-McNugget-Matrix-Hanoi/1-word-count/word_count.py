@@ -13,5 +13,5 @@ def word_counts(filename, number):
         print("{}: {}".format(word,count))
 
 if __name__ == "__main__":
-    wcounts = word_counts('article.txt', 5)
-    # now how do you display your data?
+    wcounts = word_counts('article.txt', 11)
+

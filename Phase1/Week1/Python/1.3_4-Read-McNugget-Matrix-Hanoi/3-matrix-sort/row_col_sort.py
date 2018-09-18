@@ -1,4 +1,5 @@
 import numpy as np 
+from tabulate import tabulate
 
 def read_matrix_file(filename):
     with open(filename, 'r') as open_file:
@@ -42,9 +43,10 @@ def col_sort(list_of_lists):
 if __name__ == "__main__":
     file = "test.txt"
     list_of_lists = read_matrix_file(file)
+    print(tabulate(list_of_lists))
     # print(list_of_lists)
     # print_matrix(list_of_lists)
     # print(row_sums(list_of_lists))
-    # print(col_sums(list_of_lists))
-    print(row_sort(list_of_lists))
-    print(col_sort(list_of_lists))
+    print(col_sums(list_of_lists))
+    print(tabulate(row_sort(list_of_lists)))
+    print(tabulate(col_sort(list_of_lists)))

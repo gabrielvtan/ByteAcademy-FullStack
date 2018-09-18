@@ -18,4 +18,4 @@ def move_stack(n, start, stop, middle):
         
 
 if __name__ == "__main__":
-    move_stack(3, A, B, C)
+    move_stack(4, A, B, C)
