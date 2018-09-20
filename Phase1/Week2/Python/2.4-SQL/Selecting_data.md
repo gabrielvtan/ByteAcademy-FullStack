@@ -28,7 +28,7 @@ select * from empinfo
        where age > 40;
 ```
 
-### 4) Display the first and last names for everyone whose last name ends in an "ay".
+#### 4) Display the first and last names for everyone whose last name ends in an "ay".
 
 ```
 select first, last from empinfo
@@ -41,7 +41,7 @@ select * from empinfo
        where first = 'Mary';
 ```
 
-### 6) Display all columns for everyone whose first name contains "Mary".
+#### 6) Display all columns for everyone whose first name contains "Mary".
 ```
 select * from empinfo
        where first LIKE '%Mary%';
