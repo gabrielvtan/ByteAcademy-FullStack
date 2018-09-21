@@ -2,6 +2,8 @@ import sqlite3
 
 class Database:
     # Constructor
+    # Whenever you run 'with Database (<database>) as db:' - you initilize
+    # the init function 
     def __init__(self, database_name):
         self.connection = sqlite3.connect(database_name, check_same_thread=False)
         self.cursor = self.connection.cursor()

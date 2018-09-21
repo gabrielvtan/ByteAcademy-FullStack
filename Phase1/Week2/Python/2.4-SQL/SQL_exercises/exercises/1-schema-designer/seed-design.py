@@ -2,25 +2,76 @@
 
 import sqlite3
 
-connection = sqlite3.connect('snacks.db', check_same_thread = False)
+connection = sqlite3.connect('class_many_students1.db', check_same_thread = False)
 cursor = connection.cursor()
 
 cursor.execute(
-    """INSERT INTO snacks(
-        brand,
-        type,
-        price,
-        quantity
+    """INSERT INTO class(
+        class_id,
+        class_name,
+        teacher_id,
+        student_id
         ) VALUES(
         ?,
         ?,
         ?,
         ?
     ); """, (
-        'Hostess',
-        'Snacky Cakes',
-        10,
-        100
+        'BYTE',
+        'THEMA',
+        'GREG',
+        'MATT'
+    )
+)
+
+cursor.execute(
+    """INSERT INTO class(
+        class_id,
+        class_name,
+        teacher_id,
+        student_id
+        ) VALUES(
+        ?,
+        ?,
+        ?,
+        ?
+    ); """, (
+        'BYTE',
+        'THEMA',
+        'GREG',
+        'GABBY'
+    )
+)
+
+cursor.execute(
+    """INSERT INTO students(
+        first,
+        last,
+        student_id
+        ) VALUES(
+        ?,
+        ?,
+        ?
+    ); """, (
+        'Matt',
+        'Neely',
+        'MATT'
+    )
+)
+
+cursor.execute(
+    """INSERT INTO students(
+        first,
+        last,
+        student_id
+        ) VALUES(
+        ?,
+        ?,
+        ?
+    ); """, (
+        'Gabby',
+        'Tan',
+        'GABBY'
     )
 )
 
