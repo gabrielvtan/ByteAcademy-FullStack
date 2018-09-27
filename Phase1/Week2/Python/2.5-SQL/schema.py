@@ -2,7 +2,7 @@
 
 import sqlite3
 
-connection = sqlite3.connect('school.db', check_same_thread = False)
+connection = sqlite3.connect('school2.db', check_same_thread = False)
 cursor = connection.cursor()
 
 # class_id:
@@ -14,14 +14,17 @@ cursor.execute(
         pk INTEGER PRIMARY KEY AUTOINCREMENT,
         class_id VARCHAR(32),
         teacher_id VARCHAR(32),
-        student_id VARCHAR(32)
+        student_id VARCHAR(32),
+        FOREIGN KEY (student_id) REFERENCES student(student_id),
+        FOREIGN KEY (teacher_id) REFERENCES teacher(teacher_id),
+        UNIQUE (student_id, teacher_id)
     );"""
 )
 
 # student_id:
 # 1 - Gabby, 2 - Matt, 3 - Jason, 4-Kenny
 # 1 - Adam, 2 - Cal, 3 - Advi 
-# 1 - Jun, 2 - Aileen, 3 - Matt
+# 1 - Jun, 2 - Aileen, 3 - John
 
 cursor.execute(
     """CREATE TABLE student(
@@ -29,8 +32,7 @@ cursor.execute(
         student_id VARCHAR(32),
         first VARCHAR(32),
         last VARCHAR(32),
-        city VARCHAR(32),
-        FOREIGN KEY (student_id) REFERENCES class(id)
+        city VARCHAR(32)
     );"""
 )
 
@@ -43,8 +45,7 @@ cursor.execute(
         teacher_id VARCHAR(32),
         first VARCHAR(32),
         last VARCHAR(32),
-        project VARCHAR(32),
-        FOREIGN KEY (teacher_id) REFERENCES class(id)
+        project VARCHAR(32)
     );"""
 )
 

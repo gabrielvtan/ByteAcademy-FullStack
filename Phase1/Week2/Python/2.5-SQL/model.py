@@ -33,6 +33,7 @@ class Database:
                     '{}'.format(student_id_)
                 )
             )
+        return True
 
     def add_entry_student(self, student_id_, first_, last_, city_):
         self.cursor.execute(
@@ -53,6 +54,7 @@ class Database:
                     '{}'.format(city_),
                 )
             )
+        return True
 
     def add_entry_teacher(self, teacher_id_, first_, last_, project_):
         self.cursor.execute(
@@ -73,3 +75,10 @@ class Database:
                     '{}'.format(project_),
                 )
             )
+        return True
+    
+    def lookup_all(self, table_name):
+        sql = """SELECT * FROM {};""".format(table_name)
+        self.cursor.execute(sql)
+        result = self.cursor.fetchall()
+        return result
