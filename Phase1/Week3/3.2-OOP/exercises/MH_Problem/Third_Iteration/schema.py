@@ -5,7 +5,7 @@ import sqlite3
 connection = sqlite3.connect('monty_hall.db', check_same_thread = False)
 cursor = connection.cursor()
 
-#query = "selece * from ? where name = ? "
+#query = "select * from ? where name = ? "
 #cursor.execute(query, varaible) 
 
 cursor.execute(
