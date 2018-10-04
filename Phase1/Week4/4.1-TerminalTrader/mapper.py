@@ -18,6 +18,7 @@ class Database:
             print('Unfinished control flow in database')
             pass
     
+
     def add_column(self, table_name, column_name, column_type):
         self.cursor.execute(
             """ ALTER TABLE {table_name}
@@ -29,6 +30,7 @@ class Database:
             )
         )
 
+
     def check_ticker_status(self, user_id, ticker_symbol):
         sql = """SELECT ticker FROM portfolio WHERE user_id == '{}' and ticker == '{}';""".format(user_id, ticker_symbol)
         self.cursor.execute(sql)
@@ -38,6 +40,15 @@ class Database:
         else:
             return (False)
     
+
+    def check_volume(self, user_id, ticker_symbol):
+        sql = """SELECT volume FROM portfolio WHERE user_id == '{}' and ticker == '{}'; """.format(user_id, ticker_symbol)
+        self.cursor.execute(sql)
+        current_volume = self.cursor.fetchall()
+        current_volume = ((current_volume[0][0]))
+        return current_volume
+
+
     def create_table(self, table_name):
         self.cursor.execute(
             """CREATE TABLE {table_name} (
@@ -55,6 +66,7 @@ class Database:
         result = ((result[0][0]))
         return result
 
+
     def new_buy_portfolio(self, user_id, ticker_symbol, trade_volume):
         self.cursor.execute(
             """INSERT INTO portfolio (
@@ -71,7 +83,8 @@ class Database:
             )
         )
 
-    def new_buy_transctions(self, user_id, date, ticker_symbol, trade_volume, cost_basis):
+
+    def new_transction(self, user_id, date, ticker_symbol, trade_volume, cost_basis):
         self.cursor.execute(
             """INSERT INTO transactions (
                 user_id,
@@ -85,15 +98,16 @@ class Database:
                 ?,
                 ?,
                 ?
-            );""", ('{}'.format(user_id),
-                    '{}'.format(date),
-                    '{}'.format(ticker_symbol),
-                    '{}'.format(trade_volume),
-                    '{}'.format(cost_basis)
+            );""", (user_id,
+                    date,
+                    ticker_symbol,
+                    trade_volume,
+                    cost_basis
             )
         )
     
-    ## YOU NEED TO FIX THIS 
+  
+
     def update_portfolio_existing(self, user_id, ticker_symbol, trade_volume):
         sql = """SELECT volume FROM portfolio WHERE ticker == '{}';""".format(ticker_symbol)
         self.cursor.execute(sql)
@@ -102,10 +116,9 @@ class Database:
         sql1 = """UPDATE portfolio SET volume = '{}' where user_id == '{}' and ticker == '{}';""".format(total_volume, user_id, ticker_symbol)
         self.cursor.execute(sql1)
         return self.cursor.fetchall()
-        
-    ## YOU NEED TO FIX THIS 
+
+
     def update_balance(self, user_id, cash_balance, total):
-        #update table_name SET column_name = "value" where user_id = ""
         remaining_balance = cash_balance - total
         sql = """UPDATE users SET cash_balance = '{}' where user_id == '{}'""".format(remaining_balance, user_id)
         self.cursor.execute(sql)
@@ -117,9 +130,9 @@ class Database:
 if __name__ == '__main__':
     user_id = 'Gabby'
     password = 1234
-    ticker_symbol = 'GOOG'
-    trade_volume = 100
+    ticker_symbol = 'AAPL'
+    trade_volume = 2
     with Database('terminal_trader.db') as db:
-        result = db.update_portfolio_existing(user_id, ticker_symbol, trade_volume)
+        result = db.check_volume(user_id, ticker_symbol)
         print(result)
 

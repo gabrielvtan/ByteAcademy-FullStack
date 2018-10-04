@@ -36,8 +36,8 @@ def game_loop():
                 time.sleep(2) 
                 break
             elif user_input in sell_inputs:
-                
-                pass
+                model.sell(user_id, cash_balance)
+                break
             elif user_input in lookup_inputs:
                 return model.lookup(view.lookup_menu())
             elif user_input in quote_inputs:

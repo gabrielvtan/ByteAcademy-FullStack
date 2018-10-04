@@ -19,17 +19,15 @@ def buy(user_id, cash_balance):
     else:
         with Database ('terminal_trader.db') as db:
             result = db.check_ticker_status(user_id, ticker_symbol)
-            print(result)
-            db.new_buy_transctions(user_id, date, ticker_symbol, trade_volume, cost_basis)
+            db.new_transction(user_id, date, ticker_symbol, trade_volume, cost_basis)
             db.update_balance(user_id, cash_balance, total)
-            if result == True:
+            if result:
                 # update the current portfolio holding for total volume of a given stock
                 db.update_portfolio_existing(user_id, ticker_symbol, trade_volume)
             else:
                 # create a new entry in the portfolio
                 db.new_buy_portfolio(user_id, ticker_symbol, trade_volume)
 
-                
 
 
 def check_balance(user_id, password):
@@ -38,13 +36,28 @@ def check_balance(user_id, password):
 
         
 
-def sell(user_id, ticker_symbol, trade_volume, cash_balance):
-    (ticker_symbol, trade_volume) = view.transaction_menu()
+def sell(user_id, cash_balance):
+    # cost_basis is actually sale price
+    (ticker_symbol, trade_volume) = view.sell_menu()
     cost_basis = quote(ticker_symbol)
     date = time(ticker_symbol)
-    total = trade_volume * cost_basis
+    with Database('terminal_trader.db') as db:
+        result = db.check_ticker_status(user_id, ticker_symbol)
+        current_volume = int(db.check_volume(user_id, ticker_symbol))
+        if trade_volume > current_volume:
+            view.error_message()
+            sell(user_id, cash_balance)
+        else:
+            trade_volume = -trade_volume
+            total = cost_basis * trade_volume
+            # record the transaction in transactoins table
+            db.new_transction(user_id, date, ticker_symbol, trade_volume, cost_basis)
+            # decrease volume in portfolio table
+            db.update_portfolio_existing(user_id, ticker_symbol, trade_volume)
+            # increase the cash balance 
+            db.update_balance(user_id, cash_balance, total)
+
     
-    pass
 
 def lookup(company_name):
     #endpoint = 'http://dev.markitondemand.com/MODApis/Api/v2/Lookup/json?input='+company_name
@@ -66,10 +79,10 @@ if __name__ == '__main__':
     #simple test
     #print('This is the price of Tesla: ', quote(lookup('tesla')))
     user_id = 'Gabby'
-    ticker_symbol = 'TSLA'
-    trade_volume = 5
+    #ticker_symbol = 'TSLA'
+    #trade_volume = 5
     cash_balance = 100000
-    print(buy(user_id, cash_balance))
+    print(sell(user_id, cash_balance))
 
 
 

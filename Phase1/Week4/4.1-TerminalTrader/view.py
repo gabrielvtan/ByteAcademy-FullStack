@@ -41,5 +41,8 @@ def main_menu(user_id):
 def quote_menu():
     return input('Ticker Symbol: ')
 
-
+def sell_menu():
+    os.system('clear')
+    print('What stock would you like to sell?')
+    return input('Ticker Symbol: '), int(input('Trade Volume: '))
 
