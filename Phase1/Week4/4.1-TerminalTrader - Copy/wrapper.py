@@ -35,11 +35,3 @@ class Markit:
                 ).text
         )['LastPrice']
 
-    def time_now(self, ticker_symbol):
-        return json.loads(
-            requests.get(
-                self.shared_endpoint
-                +self.quote_path
-                +ticker_symbol
-                ).text
-        )['Timestamp']
