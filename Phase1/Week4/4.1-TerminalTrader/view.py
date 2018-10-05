@@ -60,3 +60,6 @@ def table_view():
     os.system('clear')
     print('The 3 tables are: users, transactions, and portfolio')
     return input('Which table would you like to view? ')
+
+def transaction_success():
+    print('transaction succesfull')

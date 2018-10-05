@@ -24,10 +24,10 @@ def game_loop():
                 if user_input in table_view_inputs:
                     table_name = view.table_view()
                     model.view_table(table_name)
-                    time.sleep(5)
+                    time.sleep(3)
                 elif user_input in leaderboard_inputs:
                     model.leaderboard()
-                    time.sleep(5)
+                    time.sleep(3)
                 elif user_input in exit_inputs:
                     break
             else:
@@ -54,12 +54,16 @@ def game_loop():
             if user_input in acceptable_inputs:
                 if user_input in buy_inputs:
                     model.buy(user_id, cash_balance)
+                    view.transaction_success()
                     time.sleep(1) 
                 elif user_input in check_balance_inputs:
+                    model.update_user_positions(user_id)
                     view.check_balance(cash_balance)
-                    time.sleep(1) 
+                    time.sleep(3) 
                 elif user_input in sell_inputs:
                     model.sell(user_id, cash_balance)
+                    view.transaction_success()
+                    time.sleep(1)
                 elif user_input in lookup_inputs:
                     model.lookup(view.lookup_menu())
                     time.sleep(1) 

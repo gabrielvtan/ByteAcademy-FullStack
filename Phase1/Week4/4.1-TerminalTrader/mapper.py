@@ -31,6 +31,10 @@ class Database:
         )
 
 
+    def check_positions(self, user_id):
+        sql = """SELECT """
+
+
     def check_ticker_status(self, user_id, ticker_symbol):
         sql = """SELECT ticker FROM portfolio WHERE user_id == '{}' and ticker == '{}';""".format(user_id, ticker_symbol)
         self.cursor.execute(sql)
@@ -57,14 +61,6 @@ class Database:
                 table_name = table_name
             )
         )
-    
-
-    
-    
-    def get_total_value(self, user):
-        sql = """SELECT user_id, SUM(total_value) FROM portfolio WHERE user_id == '{}'; """.format(user)
-        self.cursor.execute(sql)
-        return self.cursor.fetchall()
 
 
     def get_tickers(self):
@@ -76,7 +72,25 @@ class Database:
             ticker_list.append(ticker[0])
         return ticker_list
 
-    # DO THIS FIRST 
+
+    def get_tickers_users(self, user_id):
+        sql = """SELECT ticker FROM portfolio WHERE user_id = '{}';""".format(user_id)
+        self.cursor.execute(sql)
+        tickers = self.cursor.fetchall()
+        ticker_list = []
+        for ticker in tickers:
+            ticker_list.append(ticker[0])
+        return ticker_list
+
+    def get_users(self):
+        sql = """SELECT user_id FROM users;"""
+        self.cursor.execute(sql)
+        users = self.cursor.fetchall()
+        user_list = []
+        for user in users:
+            user_list.append(user[0])
+        return user_list
+    
     def leaderboard(self):
         sql = """SELECT user_id, SUM(total_value) 
                 FROM (
@@ -176,6 +190,14 @@ class Database:
                     and ticker == '{}';""".format(total_volume, last_price, total_volume*last_price, user_id, ticker_symbol)
         self.cursor.execute(sql1)
         return self.cursor.fetchall()
+    
+    def update_user_balance(self, user_id, ticker_symbol, volume, last_price):
+        sql1 = """UPDATE portfolio SET last_price = '{}', 
+            total_value = '{}' 
+            WHERE user_id == '{}' 
+            and ticker == '{}';""".format(last_price, volume*last_price, user_id, ticker_symbol)
+        self.cursor.execute(sql1)
+        return self.cursor.fetchall()        
 
 
     def update_balance(self, user_id, cash_balance, total):
@@ -184,20 +206,27 @@ class Database:
         self.cursor.execute(sql)
         return self.cursor.fetchall()
 
+
     def update_last_price(self, last_price, ticker):
         sql = """UPDATE portfolio SET last_price = '{}' WHERE ticker = '{}';""".format(last_price, ticker)
         self.cursor.execute(sql)
         return self.cursor.fetchall()
+
 
     def view_table(self, table_name):
         sql = """SELECT * FROM '{}' """.format(table_name)
         self.cursor.execute(sql)
         return self.cursor.fetchall()
 
+    def view_user_positions(self, user_id):
+        sql = """SELECT * FROM portfolio WHERE user_id = '{}'""".format(user_id)
+        self.cursor.execute(sql)
+        return self.cursor.fetchall()
 
 
 if __name__ == '__main__':
-    pass
+    with Database('terminal_trader.db') as db:
+        print(db.get_users())
 
 
 #SELECT user_id, SUM(total_value) FROM portfolio GROUP BY user_id UNION ALL SELECT user_id, sum(cash_balance) FROM users GROUP BY user_id;

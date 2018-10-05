@@ -36,7 +36,6 @@ def check_balance(user_id, password):
     with Database('terminal_trader.db') as db:
         balance = round(db.log_in_information(user_id,password), 2)
         return balance
-
         
 
 def sell(user_id, cash_balance):
@@ -64,20 +63,16 @@ def sell(user_id, cash_balance):
 
 def leaderboard():
     with Database('terminal_trader.db') as db:
-        ticker_list = db.get_tickers()
-        for ticker in ticker_list:
-            last_price = quote(ticker)
-            # NEED TO incorporate updated volume
-            # YOU ALREADY WROTE THIS FUNCTION 
-            db.update_last_price(last_price, ticker)
-        pprint(db.leaderboard())
+        user_list = db.get_users()
+        for user_id in user_list:
+            ticker_list = db.get_tickers_users(user_id)
+            for ticker in ticker_list:
+                last_price = quote(ticker)
+                volume = db.check_volume(user_id, ticker)
+                db.update_user_balance(user_id, ticker, volume, last_price)
+        pprint(db.leaderboard(), depth = 10)
 
 
-
-        
-
-
-    
 def lookup(company_name):
     #endpoint = 'http://dev.markitondemand.com/MODApis/Api/v2/Lookup/json?input='+company_name
     #response = json.loads(requests.get(endpoint).text)
@@ -93,7 +88,16 @@ def time(ticker_symbol):
 def quote(ticker_symbol):
     with Markit() as api:
         return api.quote(ticker_symbol)
-        
+
+
+def update_user_positions(user_id):
+    with Database('terminal_trader.db') as db:
+        ticker_list = db.get_tickers_users(user_id)
+        for ticker in ticker_list:
+            last_price = quote(ticker)
+            volume = db.check_volume(user_id, ticker)
+            db.update_user_balance(user_id, ticker, volume, last_price)
+        pprint(db.view_user_positions(user_id))    
 
 def view_table(table_name):
     with Database ('terminal_trader.db') as db:
