@@ -21,8 +21,8 @@ cursor.execute(
         user_id VARCHAR(32),
         date DATETIME, 
         ticker VARCHAR(32),
-        volume VARCHAR(32),
-        cost_basis VARCHAR(32)
+        volume DECIMAL,
+        last_price DECIMAL
     );"""
 )
 
@@ -31,7 +31,9 @@ cursor.execute(
         pk INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id VARCHAR(32),
         ticker VARCHAR(32),
-        volume VARCHAR(32)
+        volume DECIMAL,
+        last_price DECIMAL,
+        total_value DECIMAL
     );"""
 )
 

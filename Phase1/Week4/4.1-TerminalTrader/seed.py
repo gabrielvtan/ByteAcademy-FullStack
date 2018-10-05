@@ -19,7 +19,7 @@ cursor.execute(
         ?
     );""", (
         'Gabby',
-        1234,
+        123,
         100000
     )
 )
@@ -32,7 +32,7 @@ cursor.execute(
         date, 
         ticker,
         volume,
-        cost_basis
+        last_price
         ) VALUES (
         ?,
         ?,
@@ -51,14 +51,20 @@ cursor.execute(
     """INSERT INTO portfolio(
         user_id,
         ticker,
-        volume
+        volume,
+        last_price,
+        total_value 
         ) VALUES (
+        ?,
+        ?,
         ?,
         ?,
         ?
     );""", ('Gabby',
             'TSLA',
-            100
+            100,
+            280,
+            28000
     )
 )
 
