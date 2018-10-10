@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- This is NOT displayed in the viewport -->
+        <meta charset="utf-8">
+        <title>Deaf Grandpa</title>
+    </head>
+    <body>
+        <!-- This is displayed in the viewport -->
+        <div>
+            <p>{{ message }}</p>
+        </div>
+        <div>
+            <form action="/grandpa" method="post">
+                <!-- Username form-field -->
+                <input name="forename" placeholder="What is your name?" type="text" required autofocus>
+                <!-- Password form-field -->
+                <input name="message" placeholder="Message" type="text" required>
+                <!-- Button -->
+                <input type="submit">
+            </form>
+        </div>
+    </body>
+</html>

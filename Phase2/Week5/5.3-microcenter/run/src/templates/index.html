@@ -1,0 +1,7 @@
+{% extends "structure.html" %}
+{% block viewport %}
+    <p> Welcome to our web. app!</p>
+    {% if version %}    
+        <h1>iPhone {{ version }}</h1>
+    {% endif %}
+{% endblock viewport %}
