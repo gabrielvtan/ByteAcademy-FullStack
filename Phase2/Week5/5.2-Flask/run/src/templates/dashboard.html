@@ -1,0 +1,29 @@
+{% extends "structure.html" %}
+{% block css_dependencies %}
+{% endblock css_dependencies %}
+
+{% block js_dependencies %}
+{% endblock js_dependencies %}
+
+{% block viewport %}
+<style>
+    .forms > * {
+      background: turquoise;
+      text-align: center;
+    }
+    </style>
+    <div class = "header">
+    <title>Gabby's Web Trader</title>
+    
+    </div>
+    <div class = "forms">
+        <form action ="/dashboard" method = "post">
+
+            <p>{{message}}</p>
+            <p>What would you like to do?</p>
+            
+            
+        </form>
+    </div>
+    </div>
+{% endblock viewport %}

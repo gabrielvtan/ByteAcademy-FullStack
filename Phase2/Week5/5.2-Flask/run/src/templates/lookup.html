@@ -1,0 +1,22 @@
+{% extends "structure.html" %}
+{% block css_dependencies %}
+{% endblock css_dependencies %}
+
+{% block js_dependencies %}
+{% endblock js_dependencies %}
+
+{% block viewport %}
+
+<p></p>
+<div class = "forms">
+    <p>Please Enter in a company name</p>
+    <form action ="/lookup" method = "post">
+        <!-- Username form-field -->
+        <input name  = "company_name" placeholder="Company Name" type ="text" autofocus>
+        <!-- Button -->
+        <input type = "submit">
+        <p></p>
+        <p>{{ message }}</p>
+    </form>
+</div>
+{% endblock viewport %}

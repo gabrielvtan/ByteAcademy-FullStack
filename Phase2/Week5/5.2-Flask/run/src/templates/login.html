@@ -1,0 +1,25 @@
+{% extends "structure.html" %}
+
+{% block css_dependencies %}
+{% endblock css_dependencies %}
+
+{% block js_dependencies %}
+{% endblock js_dependencies %}
+
+{% block viewport %}
+<h1>Login Page </h1>
+</div>
+    <p>Please Enter your Username and Password </p>
+    <form action ="/" method = "POST">
+    <!-- Username form-field -->
+    <input name  = "user_id" placeholder="User ID" type ="text" required autofocus>
+    <!-- Username form-field -->
+    <input name  = "password" placeholder="Password" type ="password" required autofocus>
+    <!-- Button -->
+    <input type = "submit">
+
+    </form>
+</div>
+
+
+{% endblock viewport %}

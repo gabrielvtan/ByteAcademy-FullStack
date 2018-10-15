@@ -1,0 +1,25 @@
+{% extends "structure.html" %}
+{% block css_dependencies %}
+{% endblock css_dependencies %}
+
+{% block js_dependencies %}
+{% endblock js_dependencies %}
+
+{% block viewport %}
+
+<p></p>
+<div class = "forms">
+    <p>Sell Transaction</p>
+    <form action ="/sell" method = "post">
+        <!-- Username form-field -->
+        <input name  = "ticker" placeholder="Ticker" type ="text" autofocus>
+        <p></p>
+        <input name  = "volume" placeholder="Trade Volume" type ="text" autofocus>
+        <!-- Button -->
+        <p></p>
+        <input type = "submit">
+        <p></p>
+        <p>{{ message }}</p>
+    </form>
+</div> 
+{% endblock viewport %}

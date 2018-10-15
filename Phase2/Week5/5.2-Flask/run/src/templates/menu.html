@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    </head>
+    <body>
+        <style>
+        .forms > * {
+          background: turquoise;
+        }
+
+        .header > * {
+            text-align: center;
+            font-size: 30px;
+            background: red
+        }
+        </style>
+        <div class = "header">
+        <title>Gabby's Web Trader</title>
+            <p>Welcome to Web Trader</p>
+        </div>
+        <div class = "forms">
+            <form action ="/menu" method = "post">
+                <p>Please Enter in a Ticker Symbol </p>
+                <!-- Username form-field -->
+                <input name  = "ticker" placeholder="Ticker" type ="text" autofocus>
+                <!-- Button -->
+                <input type = "submit">
+                <p>{{ message1 }}</p>
+                <p></p>
+                <p>Please Enter in a company name</p>
+                <!-- Username form-field -->
+                <input name  = "company_name" placeholder="Company Name" type ="text" autofocus>
+                <!-- Button -->
+                <input type = "submit">
+                <p>{{ message2 }}</p>
+                <p></p>
+                <p>Buy Transaction</p>
+                <!-- Username form-field -->
+                <input name  = "ticker_buy" placeholder="Ticker" type ="text" autofocus>
+                <input name  = "volume_buy" placeholder="Volume" type ="text" autofocus>
+                <!-- Button -->
+                <input type = "submit">
+
+            </form>
+        </div>
+    </body>
+</html>

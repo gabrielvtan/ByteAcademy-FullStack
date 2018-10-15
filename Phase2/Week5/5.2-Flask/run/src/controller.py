@@ -1,42 +1,113 @@
 #!/usr/bin/env python3
 
-from flask import Flask, render_template, request
+from mapper.mapper import Database
+from flask import Flask, render_template, request, session
+import model.model as model
 
 app = Flask(__name__)
+app.secret_key = "1234456789"
+
 
 @app.route('/', methods=['GET', 'POST'])
-def frontpage():
+def login():
     if request.method == 'GET':
-        message = 'Welcome to Web. Trader'
-        return render_template('index.html', message=message)
+        return render_template('login2.html')
     elif request.method == 'POST':
-        username = request.form['username']
+        session['user_id'] = request.form['user_id']
         password = request.form['password']
-        if username and password:
-            if username == 'kenso' and password == 'opensesame':
-                message = 'You have successfully logged into your applicaton'
-                return render_template('index.html', message=message)
-            else:
-                message = 'Please enter valid credentials'
-                return render_template('index.html', message=message)
+        if session['user_id'] and password:
+            message = "Welcome to your Web Trader homepage {}. What would you like to do?".format(session['user_id'])
+            return render_template('dashboard.html', message=message)
 
 
-@app.route('/grandpa',methods=['GET','POST'])
-def grandpa():
+@app.route('/dashboard', methods=['GET'])
+def dashboard():
     if request.method == 'GET':
-        message = 'Hello, Grandson'
-        return render_template('grandpa.html',message=message)
+        return render_template('dashboard.html')
+
+
+@app.route('/quote', methods=['GET', 'POST'])
+def quote():
+    if request.method == 'GET':
+        return render_template('quote.html')
     elif request.method == 'POST':
-        forename = request.form['forename']
-        message = request.form['message']
-        if forename and message:
-            if forename.isupper() and message.isupper():
-                spoken_word = "{}, you said {}, back in my day we would never say that...".format(forename,message )
-                return render_template('grandpa.html', message=spoken_word)
-            elif forename.islower() or message.islower():
-                spoken_word ="Speak with authority you little prick... I can't hear you."
-                return render_template('grandpa.html', message=spoken_word)
+        ticker = request.form['ticker']
+        if ticker:
+            last_price = model.quote(ticker)
+            message = "The last price of {} is {}".format(ticker, last_price)
+            return render_template('quote.html', message=message)
+
+
+@app.route('/lookup', methods=['GET', 'POST'])
+def lookup():
+    if request.method == 'GET':
+        return render_template('lookup.html')
+    elif request.method == 'POST':
+        company = request.form['company_name']
+        if company:
+            company_name = model.lookup(company)
+            message = "The ticker of {} is {}".format(company, company_name)
+            return render_template('lookup.html', message=message)   
+
+
+@app.route('/buy',methods=['GET','POST'])
+def buy():
+    if request.method == 'GET':
+        return render_template('buy.html')
+    elif request.method == 'POST':
+        user_id = session['user_id']
+        ticker_symbol = request.form['ticker']
+        trade_volume = int(request.form['volume'])
+        cash_balance = model.check_balance(user_id)
+        last_price = model.quote(ticker_symbol)
+        fee = 6.95
+        total = trade_volume * last_price + fee
+        trade_result = model.buy(user_id, ticker_symbol, trade_volume)
+        if trade_result:
+            message = "Success, you have purchased {} shares of {} for {}.".format(trade_volume, ticker_symbol, total)
+            return render_template('buy.html', message=message)
+        else:
+            message = "Your current order of {:.2f} exceeds your cash balance of {:.2f}".format(total, cash_balance)
+            return render_template('buy.html', message=message)
+
+        
+
+@app.route('/sell',methods=['GET','POST'])
+def sell():
+    if request.method == 'GET':
+        return render_template('sell.html')
+    elif request.method == 'POST':
+        user_id = session['user_id']
+        ticker_symbol = request.form['ticker']
+        trade_volume = int(request.form['volume'])
+        cash_balance = model.check_balance(user_id)
+        last_price = model.quote(ticker_symbol)
+        fee = 6.95
+        ticker_status = model.check_ticker_status(user_id, ticker_symbol)
+        if ticker_status:
+            current_volume = model.current_volume(user_id, ticker_symbol)
+            trade_result = model.sell(user_id, cash_balance, ticker_symbol, trade_volume)
+            total = last_price * trade_volume
+            if trade_result:
+                message = "You have succesfully sold {} shares of {} for {:.2f}".format(trade_volume, ticker_symbol, total)
+                return render_template('sell.html', message=message)
+            else:
+                message = "Your requested transaction of {} shares of {} exceeds your current balance of {}".format(trade_volume, ticker_symbol, current_volume)
+                return render_template('sell.html', message=message)
+        else:
+            message = "You do not own any shares of {}".format(ticker_symbol)
+            return render_template('sell.html', message=message)
+
+
+@app.route('/balance',methods=['GET','POST'])
+def balance():
+    if request.method == 'GET':
+        return render_template('balance.html')
+    elif request.method == 'POST':
+        pass 
+
 
 
 if __name__ == '__main__':
     app.run("127.0.0.1", port=5001, debug=True)
+    
