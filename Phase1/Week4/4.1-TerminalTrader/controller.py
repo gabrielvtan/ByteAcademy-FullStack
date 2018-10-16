@@ -24,10 +24,10 @@ def game_loop():
                 if user_input in table_view_inputs:
                     table_name = view.table_view()
                     model.view_table(table_name)
-                    time.sleep(3)
+                    time.sleep(5)
                 elif user_input in leaderboard_inputs:
                     model.leaderboard()
-                    time.sleep(3)
+                    time.sleep(5)
                 elif user_input in exit_inputs:
                     break
             else:

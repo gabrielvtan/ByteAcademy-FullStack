@@ -7,23 +7,36 @@ import model.model as model
 app = Flask(__name__)
 app.secret_key = "1234456789"
 
+@app.route('/admin', methods=['GET'])
+def admin():
+    if request.method == 'GET':
+        return render_template('admin.html')
+
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
-        return render_template('login2.html')
+        return render_template('login.html')
     elif request.method == 'POST':
         session['user_id'] = request.form['user_id']
         password = request.form['password']
-        if session['user_id'] and password:
-            message = "Welcome to your Web Trader homepage {}. What would you like to do?".format(session['user_id'])
-            return render_template('dashboard.html', message=message)
-
+        if session['user_id'] == 'Admin' and password == 'Admin':
+            return render_template('admin.html')
+        else:
+            try:
+                user_id = model.check_log_in(session['user_id'], password)
+                message = "Welcome to your Web Trader homepage {}. What would you like to do?".format(user_id)
+                return render_template('dashboard.html', message=message)
+            except TypeError:
+                message = "Invalid credentials"
+                return render_template('login.html', message=message)
 
 @app.route('/dashboard', methods=['GET'])
 def dashboard():
     if request.method == 'GET':
         return render_template('dashboard.html')
+
+
 
 
 @app.route('/quote', methods=['GET', 'POST'])
@@ -101,10 +114,30 @@ def sell():
 
 @app.route('/balance',methods=['GET','POST'])
 def balance():
+    user_id = session['user_id']
+    model.update_user_positions(user_id)
+    balance = model.check_balance(user_id)
+    total_portfolio_value = model.check_total_portfolio(user_id)
+
+    user_positions = model.get_user_positions(user_id)
+    tickers = []
+    shares = []
+    last_price = []
+    total_value = []
+    position_list = []
+
+    for row in user_positions:
+        tickers.append(row[0])
+        shares.append(row[1])
+        last_price.append(row[2])
+        total_value.append(row[3])
+
+    for num in range(0, len(tickers)):
+        position_list.append((tickers[num], shares[num], last_price[num], total_value[num]))
+
     if request.method == 'GET':
-        return render_template('balance.html')
-    elif request.method == 'POST':
-        pass 
+        return render_template('balance.html', balance=balance, total_portfolio_value=total_portfolio_value, position_list=position_list )
+
 
 
 

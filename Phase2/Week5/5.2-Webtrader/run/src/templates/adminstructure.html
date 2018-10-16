@@ -16,7 +16,14 @@
         {% endblock js_dependencies %}
         <link href="https://getbootstrap.com/docs/4.1/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://getbootstrap.com/docs/4.1/examples/dashboard/dashboard.css" rel="stylesheet">
-
+        <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script>
+        <script src="https://getbootstrap.com/docs/4.1/dist/js/bootstrap.min.js"></script>
+        <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+        <script>
+            feather.replace()
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+        
             <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
                 <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Web Trader</a>
                 <ul class="navbar-nav px-3">
@@ -37,39 +44,21 @@
                     <div class="sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                        <a class="nav-link" href="/dashboard">
+                        <a class="nav-link" href="/admin">
                             <span data-feather="menu"></span>
                             Dashboard <span class="sr-only">(current)</span>
                         </a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" href="/balance">
+                        <a class="nav-link" href="#">
                             <span data-feather="menu"></span>
-                            Check Balance
+                            Leaderboard
                         </a>
                         </li>
                         <li class="nav-item">
                         <a class="nav-link" href="/buy">
                             <span data-feather="menu"></span>
-                            Buy
-                        </a>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link" href="/sell">
-                            <span data-feather="menu"></span>
-                            Sell
-                        </a>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link" href="/lookup">
-                            <span data-feather="menu"></span>
-                            Look Up
-                        </a>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link" href="quote">
-                            <span data-feather="menu"></span>
-                            Quote
+                            Table View
                         </a>
                         </li>
                     </div>
@@ -77,7 +66,7 @@
             
                 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Web Trader</h1>
+                    <h1 class="h2">Admin View</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-group mr-2">
 
@@ -86,8 +75,8 @@
                 </main>
             </div>
         </div>
-            </head>
-            <body>
+    </head>
+    <body>
                 
         {% block viewport %}
  
@@ -96,20 +85,26 @@
     </body>
     <style>
         .forms > * {
-          font-size: 20px;
-          text-align:left;
-          position: relative;
-          left: 350px;
-          top: 25px;
+            font-size: 20px;
+            text-align:left;
+            position: relative;
+            left: 300px;
+            top: 10px;
+            width: 100%;
         }
     
         .header > * {
             text-align: center;
             font-size: 30px;
-            background: red
         }
+
         .flex-column > * {
             text-align: left;
         }
-        </style>
+
+        .table-responsive > * {
+            width: 100%;
+            height: 100%
+        }
+    </style>
 </html>

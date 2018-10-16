@@ -1,0 +1,20 @@
+{% extends "structure.html" %}
+{% block css_dependencies %}
+{% endblock css_dependencies %}
+
+{% block js_dependencies %}
+{% endblock js_dependencies %}
+
+{% block viewport %}
+
+<title>Gabby's Web Trader</title>
+
+<div class = "forms">
+    <form action ="/dashboard" method = "post">
+        <p>{{message}}</p>
+        <p>What would you like to do?</p>
+        <img class="mb-4" src="https://i0.wp.com/mypets.gallery/wp-content/uploads/2016/01/5-Copy-4.jpg?w=600&ssl=1" alt="" width="300" height="300">            
+    </form>
+</div>
+
+{% endblock viewport %}

@@ -1,5 +1,6 @@
 # log in and register SQL
 import sqlite3
+from pprint import pprint
 
 class Database:
     def __init__(self, database_name):
@@ -38,9 +39,6 @@ class Database:
         return result
 
 
-    def check_positions(self, user_id):
-        sql = """SELECT """
-
 
     def check_ticker_status(self, user_id, ticker_symbol):
         sql = """SELECT ticker FROM portfolio WHERE user_id == '{}' and ticker == '{}';""".format(user_id, ticker_symbol)
@@ -52,7 +50,11 @@ class Database:
             return (False)
     
     def check_log_in(self, user_id, password):
-        sql = """SELECT password FROM  """
+        sql = """SELECT user_id FROM users WHERE user_id == '{}' and password == '{}';""".format(user_id, password)
+        self.cursor.execute(sql)
+        user_id = self.cursor.fetchall()
+        user_id = ((user_id[0][0]))
+        return user_id
 
     def check_volume(self, user_id, ticker_symbol):
         sql = """SELECT volume FROM portfolio WHERE user_id == '{}' and ticker == '{}'; """.format(user_id, ticker_symbol)
@@ -177,7 +179,19 @@ class Database:
                     10000.
             )
         )
-  
+
+    def total_portfolio(self, user_id):
+        sql ="""SELECT SUM(total_value) 
+                FROM (SELECT cash_balance AS total_value 
+                    FROM users WHERE user_id = '{}' 
+                    UNION 
+                    SELECT SUM(total_value) AS total_value 
+                    FROM portfolio WHERE user_id = '{}')
+            ;""".format(user_id, user_id)
+        self.cursor.execute(sql)
+        total_portfolio = self.cursor.fetchall()
+        return ((total_portfolio[0][0]))
+
 
     def update_portfolio_existing(self, user_id, ticker_symbol, trade_volume, last_price):
         sql = """SELECT volume FROM portfolio WHERE ticker == '{}';""".format(ticker_symbol)
@@ -220,16 +234,17 @@ class Database:
         return self.cursor.fetchall()
 
     def view_user_positions(self, user_id):
-        sql = """SELECT * FROM portfolio WHERE user_id = '{}'""".format(user_id)
+        sql = """SELECT ticker, volume, last_price, total_value FROM portfolio WHERE user_id = '{}'""".format(user_id)
         self.cursor.execute(sql)
         return self.cursor.fetchall()
 
+    
+
 
 if __name__ == '__main__':
-    user_id = 'cookiemonster'
+    user_id = 'Gabby'
     password = 123
-    with Database('terminal_trader.db') as db:
-        db.new_user(user_id, password)
+    with Database('web_trader.db') as db:
+        print(db.view_user_positions(user_id))
 
 
-#SELECT user_id, SUM(total_value) FROM portfolio GROUP BY user_id UNION ALL SELECT user_id, sum(cash_balance) FROM users GROUP BY user_id;

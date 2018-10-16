@@ -225,8 +225,10 @@ class Database:
 
 
 if __name__ == '__main__':
+    user_id = 'cookiemonster'
+    password = 123
     with Database('terminal_trader.db') as db:
-        print(db.get_users())
+        db.new_user(user_id, password)
 
 
 #SELECT user_id, SUM(total_value) FROM portfolio GROUP BY user_id UNION ALL SELECT user_id, sum(cash_balance) FROM users GROUP BY user_id;

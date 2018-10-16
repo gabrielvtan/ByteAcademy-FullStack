@@ -3,8 +3,8 @@
 database = 'web_trader.db'
 
 from flask import Flask, render_template, request, session
-from wrapper.api import Markit
-from mapper.mapper import Database
+from src.wrapper.api import Markit
+from src.mapper.mapper import Database
 
 def quote(ticker_symbol):
     with Markit() as api:
@@ -28,10 +28,22 @@ def check_ticker_status(user_id, ticker_symbol):
     with Database(database) as db:
         return db.check_ticker_status(user_id, ticker_symbol)
 
+def check_total_portfolio(user_id):
+    with Database(database) as db:
+        return db.total_portfolio(user_id)
+
+def check_log_in(user_id, password):
+    with Database(database) as db:
+        return db.check_log_in(user_id, password)
+
 
 def current_volume(user_id, ticker_symbol):
     with Database(database) as db:
         return int(db.check_volume(user_id, ticker_symbol))
+
+def get_user_positions(user_id):
+    with Database(database) as db:
+        return db.view_user_positions(user_id)
 
 
 def buy(user_id, ticker_symbol, trade_volume):
@@ -74,3 +86,11 @@ def sell(user_id, cash_balance, ticker_symbol, trade_volume):
             # increase the cash balance 
             db.update_balance(user_id, cash_balance, total)
             return True
+
+def update_user_positions(user_id):
+    with Database(database) as db:
+        ticker_list = db.get_tickers_users(user_id)
+        for ticker in ticker_list:
+            last_price = quote(ticker)
+            volume = db.check_volume(user_id, ticker)
+            db.update_user_balance(user_id, ticker, volume, last_price)
