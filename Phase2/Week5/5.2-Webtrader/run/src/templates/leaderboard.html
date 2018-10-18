@@ -10,10 +10,27 @@
 <title>Gabby's Web Trader</title>
 
 <div class = "forms">
-    <form action ="/admin" method = "post">
-        <p>Hey Admin, What would you like to do?</p>
-        <img class="mb-4" src="https://visualpharm.com/assets/314/Admin-595b40b65ba036ed117d36fe.svg" alt="" width="300" height="300">            
+    <h4>Leaderboard</h4>
+    <form action ="/admin/leaderboard" method = "get">
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+              <thead>
+                <tr>
+                  <th>User ID</th>
+                  <th>PortfolioValue</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in position_list %}
+                <tr>
+                  <td>{{ row[0] }}</td>
+                  <td>{{ row[1] }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
     </form>
-</div>
+</div> 
 
 {% endblock viewport %}

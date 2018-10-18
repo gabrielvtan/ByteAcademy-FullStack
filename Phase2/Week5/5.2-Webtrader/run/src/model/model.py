@@ -45,6 +45,17 @@ def get_user_positions(user_id):
     with Database(database) as db:
         return db.view_user_positions(user_id)
 
+def leaderboard():
+    with Database(database) as db:
+        # user_list = db.get_users()
+        # for user_id in user_list:
+        #     ticker_list = db.get_tickers_users(user_id)
+        #     for ticker in ticker_list:
+        #         last_price = quote(ticker)
+        #         volume = db.check_volume(user_id, ticker)
+        #         db.update_user_balance(user_id, ticker, volume, last_price)
+        return(db.leaderboard())
+
 
 def buy(user_id, ticker_symbol, trade_volume):
     date = time(ticker_symbol)
@@ -94,3 +105,10 @@ def update_user_positions(user_id):
             last_price = quote(ticker)
             volume = db.check_volume(user_id, ticker)
             db.update_user_balance(user_id, ticker, volume, last_price)
+
+def view_table(table_name):
+    with Database(database) as db:
+        return(db.view_table(table_name))
+
+if __name__ == '__main__':
+    print(leaderboard())
