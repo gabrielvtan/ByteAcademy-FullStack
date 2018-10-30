@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        {% block page_title %}
+            <title>Defualt Title</title>
+        {% endblock page_title %}
+        
+        {% block css_dependencies %}
+        <link href="style.css" rel="stylesheet">
+        {% endblock css_dependencies %}
+        
+        {% block js_dependencies %}
+        <script src ="behavior.js"></script>
+        {% endblock js_dependencies %}
+
+    </head>
+    <body>
+        {% block viewport %}
+            <p>This is default content, in the viewport</p>
+        {% endblock viewport %}
+    </body>
+</html>
