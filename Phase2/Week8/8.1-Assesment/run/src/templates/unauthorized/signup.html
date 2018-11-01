@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Sign Up Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://getbootstrap.com/docs/4.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/4.1/examples/sign-in/signin.css" rel="stylesheet">
+    <!------ Include the above in your HEAD tag ---------->
+</head>
+<body>
+     
+        <!------ Include the above in your HEAD tag ---------->
+    
+    <form action="/signup" method="POST" class="form-signin">
+        <img class="mb-4" src="https://upload.wikimedia.org/wikipedia/en/thumb/7/77/EricCartman.png/220px-EricCartman.png" alt="" width="300" height="300">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
+        <label for="inputUserID" class="sr-only">User ID</label>
+        <input name="user_id" type="text" id="inputUser" class="form-control" placeholder="User ID" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+        <p>{{ message }}</p>
+    </form>
+</html>
