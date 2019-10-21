@@ -28,7 +28,7 @@ Glances==2.3
 grako==3.99.9
 greenlet==0.4.13
 html5lib==1.0b10
-httpie==0.9.9
+httpie==1.0.3
 IbPy2==0.8.0
 idna==2.6
 influxdb==2.12.0
