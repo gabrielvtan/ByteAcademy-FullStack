@@ -2,7 +2,7 @@ apturl==0.5.2
 argcomplete==0.8.1
 autoenv==1.0.0
 beautifulsoup4==4.6.0
-bleach==2.1.1
+bleach==3.1.1
 blessings==1.6.1
 bottle==0.12.7
 bpython==0.17.1
