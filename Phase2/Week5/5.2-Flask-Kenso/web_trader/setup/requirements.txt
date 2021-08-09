@@ -24,7 +24,7 @@ entrypoints==0.2.3
 expressions==0.2.3
 Flask==0.12.2
 Flask-SQLAlchemy==2.3.2
-Glances==2.3
+Glances==3.2.1
 grako==3.99.9
 greenlet==0.4.13
 html5lib==1.0b10
