@@ -4,7 +4,7 @@ autoenv==1.0.0
 beautifulsoup4==4.6.0
 bleach==2.1.1
 blessings==1.6.1
-bottle==0.12.7
+bottle==0.12.20
 bpython==0.17.1
 Brlapi==0.6.4
 bs4==0.0.1
